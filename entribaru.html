@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Entri Baru Buku Tamu</title>
+    <style>
+      :root {
+        --color-primary: #00f2ff;
+        --color-secondary: #0066ff;
+        --color-accent: #ff00ff;
+        --color-bg-dark: #0a0e27;
+        --color-bg-card: #141b3d;
+        --color-text: #ffffff;
+        --color-text-muted: #8892b0;
+        --color-success: #00ff88;
+        --color-error: #ff3366;
+        --color-warning: #ffaa00;
+        --color-info: #00aaff;
+      }
+
+      /* Styling Dasar */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-dark) 0%,
+          #1a1f3a 100%
+        );
+        color: var(--color-text);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      /* Card */
+      .card {
+        background: rgba(20, 27, 61, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 600px;
+        border: 1px solid rgba(0, 242, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .card-title::before {
+        content: "";
+        width: 4px;
+        height: 24px;
+        background: linear-gradient(
+          180deg,
+          var(--color-primary),
+          var(--color-accent)
+        );
+        border-radius: 2px;
+      }
+
+      /* Form */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--color-text);
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: rgba(10, 14, 39, 0.6);
+        border: 2px solid rgba(0, 242, 255, 0.3);
+        border-radius: 8px;
+        color: var(--color-text);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        background: rgba(10, 14, 39, 0.8);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      /* Button */
+      .btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-secondary)
+        );
+        color: var(--color-bg-dark);
+        box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+      }
+
+      .btn-secondary {
+        background: rgba(136, 146, 176, 0.2);
+        color: var(--color-text);
+        border: 2px solid rgba(136, 146, 176, 0.3);
+      }
+
+      /* Alert */
+      .alert {
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: none;
+        align-items: center;
+        gap: 1rem;
+        animation: slideDown 0.3s ease;
+      }
+
+      .alert.show {
+        display: flex;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .alert-success {
+        background: rgba(0, 255, 136, 0.2);
+        border: 1px solid var(--color-success);
+        color: var(--color-success);
+      }
+      .alert-error {
+        background: rgba(255, 51, 102, 0.2);
+        border: 1px solid var(--color-error);
+        color: var(--color-error);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="formAlert" class="alert"></div>
+
+    <div class="card">
+      <h2 class="card-title">📝 Tambah Entri Baru</h2>
+      <form id="guestbookForm">
+        <div class="form-group">
+          <label class="form-label" for="guestName">Nama Tamu</label>
+          <input type="text" class="form-control" id="guestName" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestEmail"
+            >Identitas (ktp/sim/kta)</label
+          >
+          <input type="text" class="form-control" id="guestEmail" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestPhone">Nomor Telepon</label>
+          <input type="tel" class="form-control" id="guestPhone" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestCount">Jumlah Tamu</label>
+          <input
+            type="number"
+            class="form-control"
+            id="guestCount"
+            required
+            value="1"
+            min="1"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="guestInstitution"
+            >Institusi/Perusahaan</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="guestInstitution"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestPurpose">Keperluan</label>
+          <textarea class="form-control" id="guestPurpose" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestMeetWith">Bertemu Dengan</label>
+          <input type="text" class="form-control" id="guestMeetWith" required />
+        </div>
+
+        <div style="display: flex; gap: 1rem">
+          <button type="submit" class="btn btn-primary">Simpan Entri</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // --- LOCALSTORAGE INTERACTION FUNCTIONS ---
+
+      // Fungsi untuk mengambil semua entri dari Dashboard (index.html)
+      function getEntriesFromStorage() {
+        const stored = localStorage.getItem("initialGuestbook");
+        return stored ? JSON.parse(stored) : [];
+      }
+
+      // Fungsi untuk menyimpan entri kembali ke Dashboard (index.html)
+      function saveEntriesToStorage(entries) {
+        localStorage.setItem("initialGuestbook", JSON.stringify(entries));
+      }
+
+      // Fungsi untuk menentukan ID baru
+      function getNextId(entries) {
+        return entries.length > 0
+          ? Math.max(...entries.map((e) => e.id), 0) + 1
+          : 1;
+      }
+
+      // Asumsi data user yang mengisi form (karena form ini tidak memiliki login)
+      const publicUser = {
+        id: 0, // ID 0 untuk entri publik
+        name: "Tamu Umum (Entri Publik)",
+        role: "public",
+      };
+
+      // Fungsi Helper untuk menampilkan alert
+      function showAlert(elementId, message, type) {
+        const alert = document.getElementById(elementId);
+        alert.className = `alert alert-${type} show`;
+        alert.textContent = message;
+
+        setTimeout(() => {
+          alert.classList.remove("show");
+        }, 5000); // Tampilkan alert lebih lama agar terbaca
+      }
+
+      // Fungsi untuk menangani submission form
+      document
+        .getElementById("guestbookForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // 1. Ambil data yang sudah ada di localStorage
+          let allEntries = getEntriesFromStorage();
+          let currentNextId = getNextId(allEntries);
+
+          const guestCountValue = parseInt(
+            document.getElementById("guestCount").value
+          );
+
+          if (guestCountValue < 1) {
+            showAlert("formAlert", "Jumlah Tamu harus minimal 1.", "error");
+            return;
+          }
+
+          const entry = {
+            id: currentNextId,
+            userId: publicUser.id,
+            userName: publicUser.name,
+            guestName: document.getElementById("guestName").value,
+            email: document.getElementById("guestEmail").value,
+            phone: document.getElementById("guestPhone").value,
+            guestCount: guestCountValue, // KOLOM JUMLAH TAMU DITAMBAHKAN DI SINI
+            institution: document.getElementById("guestInstitution").value,
+            purpose: document.getElementById("guestPurpose").value,
+            meetWith: document.getElementById("guestMeetWith").value,
+            date: new Date().toISOString(),
+            // Entri publik harus berstatus 'pending'
+            status: "pending",
+          };
+
+          // 2. Tambahkan entri baru ke dalam array di posisi awal
+          allEntries.unshift(entry);
+
+          // 3. Simpan kembali array yang sudah diperbarui ke localStorage
+          saveEntriesToStorage(allEntries);
+
+          showAlert(
+            "formAlert",
+            "✅ Entri Tamu berhasil disimpan! Silakan **refresh halaman Dashboard** Anda untuk melihat entri ini.",
+            "success"
+          );
+
+          this.reset();
+          document.getElementById("guestCount").value = 1; // Pastikan reset ke 1
+        });
+    </script>
+  </body>
+</html>
